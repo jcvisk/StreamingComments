@@ -17,7 +17,7 @@
         </span>
         </div>
 
-        <h4 class="username">{{ctrl.comment.autor}}</h4>
+        <h4 class="username {{ctrl.comment.background == 5 || ctrl.comment.background == 6 ? 'color-black' : ''}}">{{ctrl.comment.autor}}</h4>
         <p class="comentario">{{ctrl.comment.comment}}</p>
 
     </div>

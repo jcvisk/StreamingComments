@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head th:replace="theme/template :: head"></head>
+
+<body class="g-sidenav-show  bg-gray-200">
+<aside th:replace="theme/template :: sidebar"></aside>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <!-- Navbar -->
+    <nav th:replace="theme/template :: navbar"></nav>
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+        <div class="row min-vh-80 h-100" ng-app="CommentsDataAPI" ng-controller="CommentsDataApiController as ctrl" ng-init="ctrl.init('accessToken', 'liveVideoId', 'apiKey', 'videoId');">
+            <!--Area de Youtube-->
+            <section class="col-12 col-md-6">
+                <h4>COMENTARIOS DE YOUTUBE</h4>
+                <form class="mb-2">
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="apiKey" class="form-label">API Key</label>
+                        <input type="text" name="apiKey" id="apiKey" class="form-control">
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="videoId" class="form-label">Video ID</label>
+                        <input type="text" name="videoId" id="videoId" class="form-control">
+                    </div>
+                    <div>
+                        <button ng-click="ctrl.startYoutubeComments('apiKey', 'videoId')" type="submit" class="btn bg-gradient-primary w-100 mb-0">Guardar</button>
+                    </div>
+                </form>
+                <div class="mb-5" ng-if="ctrl.comment">
+                    <button ng-click="ctrl.delteCommentario()" type="submit" class="btn bg-gradient-dark w-100 mb-0">Ocultar comentario mostrado</button>
+                </div>
+                <section style="display: flex; flex-direction: column-reverse">
+                    <div class="alert alert-youtube alert-message alert-dark" role="alert" ng-repeat="comment in ctrl.youtubeCommentList">
+                        <form method="POST" name="youtubeCommentForm" class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex user-text align-items-center">
+                                <img ng-src="{{comment.profileImageUrl}}" alt="user image" class="img-fluid user-img" referrerpolicy="no-referrer">
+                                <div>
+                                    <h1>{{comment.displayName}}</h1>
+                                    <p>{{comment.displayMessage}}</p>
+                                </div>
+                            </div>
+                            <input id="ytComment{{$index}}" type="hidden" value="{{comment.displayMessage}}">
+                            <input id="ytUrlImage{{$index}}" type="hidden" value="{{comment.profileImageUrl}}">
+                            <input id="ytAutor{{$index}}" type="hidden" value="{{comment.displayName}}">
+                            <div>
+                                <button ng-click="saveYTComment($index)" onclick="selecionarYTComment(jQuery(this));" class="btn mb-0 btn-add">
+                                  <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+                                  </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </section>
+            <!--Area de Facebook-->
+            <section class="col-12 col-md-6">
+                <h4>COMENTARIOS DE FACEBOOK</h4>
+                <form class="mb-2">
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="accessToken" class="form-label">Access Token</label>
+                        <input type="text" name="accessToken" id="accessToken" class="form-control">
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="liveVideoId" class="form-label">Live Video ID</label>
+                        <input type="text" name="liveVideoId" id="liveVideoId" class="form-control">
+                    </div>
+                    <div>
+                        <button ng-click="ctrl.startFacebookComments('accessToken', 'liveVideoId')" type="submit" class="btn bg-gradient-primary w-100 mb-0">Guardar</button>
+                    </div>
+                </form>
+                <div class="mb-5" ng-if="ctrl.comment">
+                    <button ng-click="ctrl.delteCommentario()" type="submit" class="btn bg-gradient-dark w-100 mb-0">Ocultar comentario mostrado</button>
+                </div>
+                <section style="display: flex; flex-direction: column-reverse">
+                    <div class="alert alert-facebook alert-message alert-dark" role="alert" ng-repeat="comment in ctrl.facebookCommentList">
+                        <form method="POST" name="facebookCommentForm" class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex user-text align-items-center">
+                                <img th:src="@{/assets/img/userDefault.png}" alt="user image" class="img-fluid user-img" referrerpolicy="no-referrer">
+                                <div>
+                                    <h1>Usuario de Facebook</h1>
+                                    <p>{{comment.displayMessage}}</p>
+                                </div>
+                            </div>
+                            <input id="fbComment{{$index}}" type="hidden" value="{{comment.displayMessage}}">
+                            <input id="fbAutor{{$index}}" type="hidden" value="{{comment.displayName}}">
+                            <div>
+                                <button ng-click="saveFBComment($index)" onclick="selecionarFBComment(jQuery(this));" class="btn mb-0 btn-add">
+                                  <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+                                  </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </section>
+        </div>
+        <footer th:replace="theme/template :: footer"></footer>
+    </div>
+</main>
+<div th:replace="theme/template :: customization"></div>
+
+<div th:replace="theme/template :: js"></div>
+
+<script th:src="@{assets/js/commentsDataApi/CommentsDataApiController.js(version=${date})}" type="text/javascript"></script>
+<script th:src="@{assets/js/commentsDataApi/CommentsDataApiProvider.js(version=${date})}" type="text/javascript"></script>
+
+<script>
+
+    function selecionarYTComment(elemento){
+
+        $(".alert-youtube").removeClass("alert-light");
+        $(".alert-youtube").addClass("alert-dark");
+
+        jQuery(elemento).parent().parent().parent().removeClass("alert-dark");
+        jQuery(elemento).parent().parent().parent().addClass("alert-light");
+    }
+
+    function selecionarFBComment(elemento){
+
+        $(".alert-facebook").removeClass("alert-light");
+        $(".alert-facebook").addClass("alert-dark");
+
+        jQuery(elemento).parent().parent().parent().removeClass("alert-dark");
+        jQuery(elemento).parent().parent().parent().addClass("alert-light");
+    }
+
+</script>
+
+</body>
+</html>

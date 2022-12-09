@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head th:replace="theme/template :: head"></head>
+
+<body class="comentarios" ng-app="Comments" ng-controller="CommentsContoller as ctrl" ng-init="ctrl.init();">
+
+<main class="main-container" ng-if="ctrl.comment">
+    <div class="comment-container">
+        <img src="{{ctrl.getContextPath()}}/assets/img/lowerthird/lower_third_{{ctrl.comment.background}}.png" alt="bg" style="height: 210px; width: 776px;" >
+
+        <img src="{{ctrl.comment.urlImage}}" alt="user" class="img-fluid usuario-img" referrerpolicy="no-referrer">
+        <div class="icon-plataform">
+            <span class="fa-stack fa-lg">
+            <i class="fa fa-circle fa-stack-2x"></i>
+            <i class="fa fa-stack-1x fa-inverse {{ ctrl.comment.plataforma == 1 ? 'fa-youtube-play' : 'fa-facebook' }}"></i>
+        </span>
+        </div>
+
+        <h4 class="username">{{ctrl.comment.autor}}</h4>
+        <p class="comentario">{{ctrl.comment.comment}}</p>
+
+    </div>
+</main>
+
+
+<div th:replace="theme/template :: js"></div>
+<script th:src="@{assets/js/commentsJS/CommentsController.js(version=${date})}" type="text/javascript"></script>
+<script th:src="@{assets/js/commentsJS/CommentsProvider.js(version=${date})}" type="text/javascript"></script>
+</body>
+</html>

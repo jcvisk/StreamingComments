@@ -1,0 +1,32 @@
+.alert-message{
+    padding: 0.5rem;
+}
+.user-text{
+    gap: .5rem;
+}
+.alert-message .user-img{
+    max-width: 4rem;
+    max-height: 4rem;
+    border-radius: 50%;
+}
+.alert-message h1{
+    font-size: 1.2rem;
+    color: white;
+}
+.alert-message p{
+    font-size: 1rem;
+    color: white;
+}
+
+.list-design{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+}
+
+.list-design .design-card{
+    text-align: center;
+    box-shadow: 0 0 25px 0 rgb(0 0 0 / 10%);
+    padding: 5px;
+    cursor: pointer;
+}

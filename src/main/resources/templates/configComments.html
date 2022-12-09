@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head th:replace="theme/template :: head"></head>
+
+<body class="g-sidenav-show  bg-gray-200">
+<aside th:replace="theme/template :: sidebar"></aside>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <!-- Navbar -->
+  <nav th:replace="theme/template :: navbar"></nav>
+  <!-- End Navbar -->
+  <div class="container-fluid py-4">
+    <div class="min-vh-80 h-100" ng-app="ConfigComments" ng-controller="ConfigCommentsContoller as ctrl" ng-init="ctrl.init();">
+
+
+      <h4>Configuración de comentarios</h4>
+
+      <div class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row" style="gap: 1rem">
+        <h6 id="urlViewComment" class="mb-0"></h6>
+        <i onclick="copyClipboard()" class="fa fa-clone text-dark cursor-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Copiar" aria-hidden="true"></i>
+      </div>
+
+      <section class="list-design mt-4">
+        <div class="design-card" ng-click="cambiarBackground(1)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_1.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(2)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_2.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(3)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_3.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(4)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_4.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(5)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_5.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(6)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_6.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(7)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_7.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(8)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_8.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(9)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_9.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+        <div class="design-card" ng-click="cambiarBackground(10)">
+          <img th:src="@{/assets/img/lowerthird/lower_third_10.png}" alt="img-lowerthird" class="img-fluid">
+        </div>
+      </section>
+
+    </div>
+    <footer th:replace="theme/template :: footer"></footer>
+  </div>
+</main>
+<div th:replace="theme/template :: customization"></div>
+
+<div th:replace="theme/template :: js"></div>
+
+<script th:src="@{assets/js/configCommentsJS/ConfigCommentsController.js(version=${date})}" type="text/javascript"></script>
+<script th:src="@{assets/js/configCommentsJS/ConfigCommentsProvider.js(version=${date})}" type="text/javascript"></script>
+
+<script>
+  $(document).ready(function(){
+    $("#urlViewComment").text(getContextPath()+"/display");
+  });
+
+  function copyClipboard() {
+    var $bridge = $("<input>")
+    $("body").append($bridge);
+    $bridge.val(getContextPath()+"/display").select();
+    document.execCommand("copy");
+    $bridge.remove();
+
+    $("#urlViewComment").css("color","#d63384");
+  }
+
+  function getContextPath(){
+    let origin = window.location.origin;
+    let pathName = window.location.pathname.split("/");
+    return origin +'/'+ pathName[1]
+  }
+</script>
+</body>
+</html>

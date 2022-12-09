@@ -1,0 +1,51 @@
+body.comentarios{
+    background-color: transparent;
+}
+main.main-container{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto
+}
+.comment-container{
+    position: relative;
+}
+.usuario-img{
+    position: absolute;
+    top: 13px;
+    left: 14px;
+    border-radius: 50%;
+    width: 183px;
+}
+
+.icon-plataform{
+    position: absolute;
+    bottom: 11px;
+    left: 135px;
+}
+
+.username{
+    position: absolute;
+    left: 215px;
+    top: 75px;
+    color: white;
+}
+
+.comentario{
+    position: absolute;
+    left: 215px;
+    top: 142px;
+    color: white;
+}
+
+/*Estilos para el icono de la plataforma*/
+.comentarios .fa-circle{
+    color: white;
+}
+.fa-youtube-play{
+    color: red;
+}
+.fa-facebook{
+    color: #0778e9;
+}
